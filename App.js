@@ -103,13 +103,24 @@ export default class App extends Component {
     })
   }
 
+  stop = () => {
+    clearInterval(this.timer)
+    const { laps, now, start } = this.state
+    const [firstLap, ...other] = laps
+    this.setState({
+      laps: [firstLap + now - start, ...other],
+      start: 0,
+      now: 0,
+    })
+  }
+
   render() {
     const { now, start, laps } = this.state
     const timer = now - start
     return (
       <View style={styles.container}>
         <Timer
-          interval={laps.reduce((total, curr) => total + curr, 0) + timer} 
+          interval={laps.reduce((total, curr) => total + curr, 0) + timer}
           style={styles.timer}
           />
         {laps.length === 0 && (

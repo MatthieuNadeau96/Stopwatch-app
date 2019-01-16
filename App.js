@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Platform, StyleSheet, Text, View} from 'react-native'
+import {Platform, StyleSheet, Text, View, ScrollView} from 'react-native'
 import moment from 'moment'
 
 const DATA = {
@@ -7,11 +7,11 @@ const DATA = {
   laps: [ 12234, 2345, 5555, 90009]
 }
 
-function Timer({ interval }) {
+function Timer({ interval, style }) {
   const duration = moment.duration(interval)
   const centiseconds = Math.floor(duration.milliseconds() / 10)
   return (
-    <Text style={styles.timer}>
+    <Text style={style}>
       {duration.minutes()}:{duration.seconds()}.{centiseconds}
     </Text>
   )
@@ -27,6 +27,29 @@ function RoundButton({ title, color, background }) {
   )
 }
 
+function Lap({ number, interval }) {
+  return (
+    <View style={styles.lap}>
+      <Text style={styles.lapText}>Lap {number}</Text>
+      <Timer style={styles.lapText} interval={interval} />
+    </View>
+  )
+}
+
+function LapsTable({ laps }) {
+  return (
+    <ScrollView style={styles.scrollView}>
+      {laps.map((lap, index) => (
+        <Lap
+          number={laps.length - index}
+          key={laps.length - index}
+          interval={lap}
+          />
+      ))}
+    </ScrollView>
+  )
+}
+
 function ButtonsRow({ children }) {
   return (
     <View style={styles.buttonsRow}>{children}</View>
@@ -37,11 +60,12 @@ export default class App extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Timer interval={DATA.timer}/>
+        <Timer interval={DATA.timer} style={styles.timer}/>
         <ButtonsRow>
           <RoundButton title='Reset' color='#ffffff' background='#3d3d3d'/>
           <RoundButton title='Start' color='#63c367' background='#4d8348'/>
         </ButtonsRow>
+        <LapsTable laps={DATA.laps} />
       </View>
     )
   }
@@ -83,5 +107,20 @@ const styles = StyleSheet.create({
     alignSelf: 'stretch',
     justifyContent: 'space-between',
     marginTop: 80,
+    marginBottom: 30,
   },
+  lapText: {
+    color: '#ffffff',
+    fontSize: 18,
+  },
+  lap: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    borderColor: '#2e2e2e',
+    borderTopWidth: 1,
+    paddingVertical: 10,
+  },
+  scrollView: {
+    alignSelf: 'stretch',
+  }
 })

@@ -3,11 +3,12 @@ import {Platform, StyleSheet, Text, View, ScrollView, TouchableOpacity} from 're
 import moment from 'moment'
 
 function Timer({ interval, style }) {
+  const pad = (n) => n < 10 ? '0' + n : n
   const duration = moment.duration(interval)
   const centiseconds = Math.floor(duration.milliseconds() / 10)
   return (
     <Text style={style}>
-      {duration.minutes()}:{duration.seconds()}.{centiseconds}
+      {pad(duration.minutes())}:{pad(duration.seconds())}.{pad(centiseconds)}
     </Text>
   )
 }
@@ -88,6 +89,7 @@ export default class App extends Component {
       this.setState({ now: new Date().getTime()})
     }, 100)
   }
+
   render() {
     const { now, start, laps } = this.state
     const timer = now - start

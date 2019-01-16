@@ -114,6 +114,14 @@ export default class App extends Component {
     })
   }
 
+  reset = () => {
+    this.setState({
+      start: 0,
+      now: 0,
+      laps: [],
+    })
+  }
+
   render() {
     const { now, start, laps } = this.state
     const timer = now - start
@@ -160,13 +168,13 @@ export default class App extends Component {
               title='Reset'
               color='#ffffff'
               background='#3d3d3d'
-              onPress={this.lap}
+              onPress={this.reset}
               />
             <RoundButton
               title='Resume'
               color='#63c367'
               background='#4d8348'
-              onPress={this.stop}
+              onPress={this.start}
               />
           </ButtonsRow>
         )}

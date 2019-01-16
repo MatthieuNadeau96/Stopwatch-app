@@ -45,7 +45,7 @@ function Lap({ number, interval, fastest, slowest }) {
   )
 }
 
-function LapsTable({ laps }) {
+function LapsTable({ laps, timer }) {
   const finishedLaps = laps.slice(1)
   let min = Number.MAX_SAFE_INTEGER
   let max = Number.MIN_SAFE_INTEGER
@@ -61,7 +61,7 @@ function LapsTable({ laps }) {
         <Lap
           number={laps.length - index}
           key={laps.length - index}
-          interval={lap}
+          interval={index === 0 ? timer + lap : lap}
           slowest={lap === max}
           fastest={lap === min}
           />
@@ -78,7 +78,15 @@ export default class App extends Component {
   }
 
   start = () => {
-
+    const now = new Date().getTime()
+    this.setState({
+      start: now,
+      now,
+      laps: [0],
+    })
+    this.timer = setInterval(() => {
+      this.setState({ now: new Date().getTime()})
+    }, 100)
   }
   render() {
     const { now, start, laps } = this.state
@@ -95,7 +103,7 @@ export default class App extends Component {
             onPress={this.start}
             />
         </ButtonsRow>
-        <LapsTable laps={laps} />
+        <LapsTable laps={laps} timer={timer}/>
       </View>
     )
   }

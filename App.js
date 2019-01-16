@@ -108,7 +108,10 @@ export default class App extends Component {
     const timer = now - start
     return (
       <View style={styles.container}>
-        <Timer interval={timer} style={styles.timer}/>
+        <Timer
+          interval={laps.reduce((total, curr) => total + curr, 0) + timer} 
+          style={styles.timer}
+          />
         {laps.length === 0 && (
           <ButtonsRow>
             <RoundButton

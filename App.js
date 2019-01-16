@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Platform, StyleSheet, Text, View, ScrollView} from 'react-native'
+import {Platform, StyleSheet, Text, View, ScrollView, TouchableOpacity} from 'react-native'
 import moment from 'moment'
 
 function Timer({ interval, style }) {
@@ -12,13 +12,22 @@ function Timer({ interval, style }) {
   )
 }
 
-function RoundButton({ title, color, background }) {
+function RoundButton({ title, color, background, onPress, disabled }) {
   return (
-    <View style={[ styles.button, { backgroundColor: background }]}>
+    <TouchableOpacity
+      onPress={() => !disabled && onPress()}
+      style={[ styles.button, { backgroundColor: background }]}
+      activeOpacity={disabled ? 1.0 : 0.7}>
       <View style={styles.buttonBorder}>
         <Text style={[ styles.buttonTitle, { color }]}>{title}</Text>
       </View>
-    </View>
+    </TouchableOpacity>
+  )
+}
+
+function ButtonsRow({ children }) {
+  return (
+    <View style={styles.buttonsRow}>{children}</View>
   )
 }
 
@@ -61,17 +70,15 @@ function LapsTable({ laps }) {
   )
 }
 
-function ButtonsRow({ children }) {
-  return (
-    <View style={styles.buttonsRow}>{children}</View>
-  )
-}
-
 export default class App extends Component {
   state = {
     start: 0,
     now: 0,
     laps: [],
+  }
+
+  start = () => {
+
   }
   render() {
     const { now, start, laps } = this.state
@@ -81,7 +88,12 @@ export default class App extends Component {
         <Timer interval={timer} style={styles.timer}/>
         <ButtonsRow>
           <RoundButton title='Reset' color='#ffffff' background='#3d3d3d'/>
-          <RoundButton title='Start' color='#63c367' background='#4d8348'/>
+          <RoundButton
+            title='Start'
+            color='#63c367'
+            background='#4d8348'
+            onPress={this.start}
+            />
         </ButtonsRow>
         <LapsTable laps={laps} />
       </View>

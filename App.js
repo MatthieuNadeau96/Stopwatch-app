@@ -2,11 +2,6 @@ import React, {Component} from 'react'
 import {Platform, StyleSheet, Text, View, ScrollView} from 'react-native'
 import moment from 'moment'
 
-const DATA = {
-  timer: 1234567,
-  laps: [ 12234, 2345, 5555, 90009]
-}
-
 function Timer({ interval, style }) {
   const duration = moment.duration(interval)
   const centiseconds = Math.floor(duration.milliseconds() / 10)
@@ -73,15 +68,22 @@ function ButtonsRow({ children }) {
 }
 
 export default class App extends Component {
+  state = {
+    start: 0,
+    now: 0,
+    laps: [],
+  }
   render() {
+    const { now, start, laps } = this.state
+    const timer = now - start
     return (
       <View style={styles.container}>
-        <Timer interval={DATA.timer} style={styles.timer}/>
+        <Timer interval={timer} style={styles.timer}/>
         <ButtonsRow>
           <RoundButton title='Reset' color='#ffffff' background='#3d3d3d'/>
           <RoundButton title='Start' color='#63c367' background='#4d8348'/>
         </ButtonsRow>
-        <LapsTable laps={DATA.laps} />
+        <LapsTable laps={laps} />
       </View>
     )
   }

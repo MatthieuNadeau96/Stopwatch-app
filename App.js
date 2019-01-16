@@ -92,6 +92,17 @@ export default class App extends Component {
     }, 100)
   }
 
+  lap = () => {
+    const timestamp = new Date().getTime()
+    const { laps, now, start } = this.state
+    const [firstLap, ...other] = laps
+    this.setState({
+      laps: [0, firstLap + now - start, ...other],
+      start: timestamp,
+      now: timestamp,
+    })
+  }
+
   render() {
     const { now, start, laps } = this.state
     const timer = now - start
@@ -119,12 +130,13 @@ export default class App extends Component {
               title='Lap'
               color='#ffffff'
               background='#3d3d3d'
+              onPress={this.lap}
               />
             <RoundButton
               title='Stop'
               color='#cb3434'
               background='#6b2f2f'
-              onPress={this.start}
+              onPress={this.stop}
               />
           </ButtonsRow>
         )}

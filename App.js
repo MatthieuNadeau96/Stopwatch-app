@@ -8,7 +8,9 @@ function Timer({ interval, style }) {
   const centiseconds = Math.floor(duration.milliseconds() / 10)
   return (
     <Text style={style}>
-      {pad(duration.minutes())}:{pad(duration.seconds())}.{pad(centiseconds)}
+      {pad(duration.minutes())}:
+      {pad(duration.seconds())}.
+      {pad(centiseconds)}
     </Text>
   )
 }

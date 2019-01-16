@@ -154,6 +154,22 @@ export default class App extends Component {
               />
           </ButtonsRow>
         )}
+        {laps.length > 0 && start === 0 && (
+          <ButtonsRow>
+            <RoundButton
+              title='Reset'
+              color='#ffffff'
+              background='#3d3d3d'
+              onPress={this.lap}
+              />
+            <RoundButton
+              title='Resume'
+              color='#63c367'
+              background='#4d8348'
+              onPress={this.stop}
+              />
+          </ButtonsRow>
+        )}
         <LapsTable laps={laps} timer={timer}/>
       </View>
     )

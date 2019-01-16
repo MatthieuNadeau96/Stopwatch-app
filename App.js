@@ -99,11 +99,28 @@ export default class App extends Component {
       <View style={styles.container}>
         <Timer interval={timer} style={styles.timer}/>
         <ButtonsRow>
-          <RoundButton title='Reset' color='#ffffff' background='#3d3d3d'/>
+          <RoundButton
+            title='Reset'
+            color='#ffffff'
+            background='#3d3d3d'
+            />
           <RoundButton
             title='Start'
             color='#63c367'
             background='#4d8348'
+            onPress={this.start}
+            />
+        </ButtonsRow>
+        <ButtonsRow>
+          <RoundButton
+            title='Lap'
+            color='#ffffff'
+            background='#3d3d3d'
+            />
+          <RoundButton
+            title='Stop'
+            color='#cb3434'
+            background='#6b2f2f'
             onPress={this.start}
             />
         </ButtonsRow>

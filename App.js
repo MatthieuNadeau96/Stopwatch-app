@@ -27,16 +27,30 @@ function RoundButton({ title, color, background }) {
   )
 }
 
-function Lap({ number, interval }) {
+function Lap({ number, interval, fastest, slowest }) {
+  const lapStyle = [
+    styles.lapText,
+    fastest && styles.fastestLap,
+    slowest && styles.slowestLap,
+  ]
   return (
     <View style={styles.lap}>
-      <Text style={styles.lapText}>Lap {number}</Text>
-      <Timer style={styles.lapText} interval={interval} />
+      <Text style={lapStyle}>Lap {number}</Text>
+      <Timer style={lapStyle} interval={interval} />
     </View>
   )
 }
 
 function LapsTable({ laps }) {
+  const finishedLaps = laps.slice(1)
+  let min = Number.MAX_SAFE_INTEGER
+  let max = Number.MIN_SAFE_INTEGER
+  if (finishedLaps.length >= 2) {
+    finishedLaps.forEach(lap => {
+      if(lap < min) min = lap
+      if(lap > max) max = lap
+    })
+  }
   return (
     <ScrollView style={styles.scrollView}>
       {laps.map((lap, index) => (
@@ -44,6 +58,8 @@ function LapsTable({ laps }) {
           number={laps.length - index}
           key={laps.length - index}
           interval={lap}
+          slowest={lap === max}
+          fastest={lap === min}
           />
       ))}
     </ScrollView>
@@ -122,5 +138,11 @@ const styles = StyleSheet.create({
   },
   scrollView: {
     alignSelf: 'stretch',
+  },
+  fastestLap: {
+    color: '#63c367'
+  },
+  slowestLap: {
+    color: '#ed7474'
   }
 })

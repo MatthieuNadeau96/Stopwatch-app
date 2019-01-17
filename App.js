@@ -80,6 +80,10 @@ export default class App extends Component {
     laps: [],
   }
 
+  componentWillUnmount() {
+    clearInterval(this.timer))
+  }
+
   start = () => {
     const now = new Date().getTime()
     this.setState({

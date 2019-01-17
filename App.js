@@ -122,6 +122,17 @@ export default class App extends Component {
     })
   }
 
+  resume = () => {
+    const now = new Date().getTime()
+    this.setState({
+      start: now,
+      now: now,
+    })
+    this.timer = setInterval(() => {
+      this.setState({ now: new Date().getTime()})
+    }, 100)
+  }
+
   render() {
     const { now, start, laps } = this.state
     const timer = now - start
@@ -174,7 +185,7 @@ export default class App extends Component {
               title='Resume'
               color='#63c367'
               background='#4d8348'
-              onPress={this.start}
+              onPress={this.resume}
               />
           </ButtonsRow>
         )}

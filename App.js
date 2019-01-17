@@ -81,7 +81,7 @@ export default class App extends Component {
   }
 
   componentWillUnmount() {
-    clearInterval(this.timer))
+    clearInterval(this.timer)
   }
 
   start = () => {

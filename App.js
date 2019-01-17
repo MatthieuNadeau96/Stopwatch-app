@@ -145,9 +145,10 @@ export default class App extends Component {
         {laps.length === 0 && (
           <ButtonsRow>
             <RoundButton
-              title='Reset'
-              color='#ffffff'
-              background='#3d3d3d'
+              title='Lap'
+              color='#8b8b8b'
+              background='#2d2d2d'
+              disabled
               />
             <RoundButton
               title='Start'
@@ -222,7 +223,7 @@ const styles = StyleSheet.create({
     width: 76,
     height: 76,
     borderRadius: 38,
-    borderWidth: 2,
+    borderWidth: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },
